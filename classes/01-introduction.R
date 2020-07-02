@@ -49,7 +49,7 @@ print(x)
 
 print.niemampojecia <- function(x, n = 10) {
   class(x) <- "factor"
-  x[1L:min(length(x), n)]
+  print(x[1L:min(length(x), n)])
 }
 
 print(x)
@@ -66,3 +66,19 @@ x
 y
 print(x)
 print(y)
+
+z <- x
+attr(z, "class") <- c("niemampojecia")
+print(z)
+z
+
+# Napisz: 
+# - metodę summary.niemampojecia(x), która wyświetla podsumowanie 
+# obiektu x (ile elementów a, b, c, d jest w obiekcie). Metoda powinna
+# i) generować wyswietlony w ładnej tabelce wynik podsumowania
+# a | b  | c     |
+# 4 | 55 | 15390 |
+# ii) zwracac macierz z nazwanymi kolumnami i licznosciami obiektow
+# - metode plot.niemampojecia(x), ktora wyswietla obrazek prezentujacy 
+# barplot pokazujacy licznosc elementow z obiektu x
+# Zarówno ciało funkcji jak i efekty ich pracy pokaż w pliku .Rmd
