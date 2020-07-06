@@ -15,7 +15,6 @@ server <- function(input, output) {
   output[["iris_plot_tooltip"]] <- renderUI({
     
     if(!is.null(input[["iris_plot_hover"]])) {
-      
       hv <- input[["iris_plot_hover"]]
       
       tt_df <- nearPoints(iris, hv, maxpoints = 1)
