@@ -1,8 +1,15 @@
 library(shiny)
 library(ggplot2)
 
+ttPlotOutput <- function(x) {
+  tagList(plotOutput(x, hover = paste0(x, "_hover")),
+          uiOutput(paste0(x, "_tooltip")))
+}
+
 ui <- fluidPage(title = "Let's do components",
-                ttPlotOutput("iris_plot"))
+                ttPlotOutput("iris_plot"),
+                ttPlotOutput("cars_plot"),
+                ttPlotOutput("chickwts_plot"))
 
 server <- function(input, output) {
   
@@ -11,15 +18,18 @@ server <- function(input, output) {
       geom_point()
   })
   
-  output[["iris_plot_tooltip"]] <- renderUI({
-    
-    if(!is.null(input[["iris_plot_hover"]])) {
+  output[["cars_plot"]] <- renderPlot({
+    ggplot(cars, aes(x=speed, y=dist)) + geom_point()
+  })
+  
+  output[["chickwts_plot"]] <- renderPlot({
+    ggplot(chickwts, aes(x=weight, y=feed)) + geom_point()
+  })
+  
+  generate_tooltip <- function(df, hv){
+    if(!is.null(hv)){
       hv <- input[["iris_plot_hover"]]
-      
-      tt_df <- nearPoints(iris, hv, maxpoints = 1)
-      
-      if(nrow(tt_df) != 0) { 
-        #browser()
+      if(nrow(df) != 0) { 
         tt_pos_adj <- ifelse(hv[["coords_img"]][["x"]]/hv[["range"]][["right"]] < 0.5,
                              "left", "right")
         
@@ -33,13 +43,22 @@ server <- function(input, output) {
                         "px; top:", hv[["coords_css"]][["y"]], "px; padding: 0px;")
         
         div(
+          class = paste0(hv$mapping$x, hv$mapping$y),
           style = style,
-          #p(HTML(paste0("<br/> Species: ", tt_df[["Species"]])))
-          p(HTML(paste0(colnames(tt_df)," : " ,tt_df, collapse="<br>")))
+          p(HTML(paste0(colnames(df)," : " , df, collapse="<br>")))
         )
       }
     }
-  })
+  }
+  
+  
+  output[["iris_plot_tooltip"]] <- renderUI({generate_tooltip(nearPoints(iris, input[["iris_plot_hover"]], maxpoints = 1),
+                                                              input[["iris_plot_hover"]])})  
+  output[["cars_plot_tooltip"]] <- renderUI({generate_tooltip(nearPoints(cars, input[["cars_plot_hover"]], maxpoints = 1),
+                                                              input[["cars_plot_hover"]])})  
+  output[["chickwts_plot_tooltip"]] <- renderUI({generate_tooltip(nearPoints(chickwts, input[["chickwts_plot_hover"]], maxpoints = 1),
+                                                              input[["chickwts_plot_hover"]])})  
+  
   
 }
 
