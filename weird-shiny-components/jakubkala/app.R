@@ -38,9 +38,17 @@ server <- function(input, output) {
                          hv[["range"]][["right"]]/hv[["img_css_ratio"]][["x"]] - hv[["coords_css"]][["x"]])
         
         
-        style <- paste0("position:absolute; z-index:1000; background-color: rgba(245, 245, 245, 1); pointer-events: none;",
-                        tt_pos_adj, ":", tt_pos, 
-                        "px; top:", hv[["coords_css"]][["y"]], "px; padding: 0px;")
+        # style <- paste0("position:relative; z-index:1000; background-color: rgba(245, 245, 245, 1); pointer-events: none;",
+        #                 tt_pos_adj, ":", tt_pos, 
+        #                 "px; top:", hv[["coords_css"]][["y"]], "px; padding: 0px;")
+        style <- paste0("display:block;
+                        position:absolute;
+                        z-index:1000;
+                        background-color: rgba(245, 245, 245, 1);
+                        pointer-events: none;",
+                        tt_pos_adj, ":", tt_pos, "px;
+                        top:", hv[["coords_css"]][["y"]], "px;
+                        padding: 0px;")
         
         div(
           class = paste0(hv$mapping$x, hv$mapping$y),
