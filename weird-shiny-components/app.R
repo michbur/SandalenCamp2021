@@ -1,9 +1,14 @@
 library(shiny)
 library(ggplot2)
 
+ttPlotOutput <- function(x) {
+  tagList(plotOutput(x, hover = paste0(x, "_hover")),
+          uiOutput(paste0(x, "_tooltip")))
+}
+
+
 ui <- fluidPage(title = "Let's do components",
-                plotOutput("iris_plot", hover = "iris_plot_hover"),
-                uiOutput("iris_plot_tooltip"))
+                ttPlotOutput("iris_plot"))
 
 server <- function(input, output) {
   
@@ -15,7 +20,6 @@ server <- function(input, output) {
   output[["iris_plot_tooltip"]] <- renderUI({
     
     if(!is.null(input[["iris_plot_hover"]])) {
-      
       hv <- input[["iris_plot_hover"]]
       
       tt_df <- nearPoints(iris, hv, maxpoints = 1)
