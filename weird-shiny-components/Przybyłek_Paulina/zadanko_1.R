@@ -29,9 +29,12 @@ server <- function(input, output) {
                          hv[["coords_css"]][["x"]], 
                          hv[["range"]][["right"]]/hv[["img_css_ratio"]][["x"]] - hv[["coords_css"]][["x"]])
         
-        tt_pos2 <- ifelse(hv[["coords_img"]][["y"]]/hv[["range"]][["top"]] < 15,
+        
+        #przesunięcie o 80, czyli wyświetlenie na górze bądź na dole od wskaźnika aby nie wyszło za pole obrazka - zrobione głupio i działa poprawnie
+        #tutaj, inne przypadki już nie powinny być dobre
+        tt_pos2 <- ifelse(hv[["coords_img"]][["y"]]/hv[["range"]][["top"]] < 30, # wartość wybrana metodą sprawdzania ręcznie na wykresie
                           hv[["coords_css"]][["y"]], 
-                          hv[["coords_css"]][["y"]]-100)
+                          hv[["coords_css"]][["y"]]-80) #wartość wybrana metodą sprawdzania ręcznie na wykresie
         
         style <- paste0("position:absolute; z-index:1000; background-color: rgba(245, 245, 245, 1); pointer-events: none;",
                         tt_pos_adj, ": ", tt_pos, 
