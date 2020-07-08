@@ -1,23 +1,17 @@
 library(shiny)
 library(shinycssloaders)
 library(shinyhelper)
+library(ggplot2)
 
 plotOutput_ws <- function(outputId, ...) {
   withSpinner(plotOutput(outputId, ...))
 }
 
-plotOutput_h <- function(outputId, ...) {
-  helper(withSpinner(plotOutput(outputId, ...)), content = outputId, type = "markdown")
-}
 
-numericOutput_h <- function(outputId, ...) {
-  helper(withSpinner(numericInput(outputId, ...)), content = outputId, type = "markdown")
-}
-
-
-
-ui <- fluidPage(numericOutput_h("n_points", label = "Number of points", value = 15820), 
-                plotOutput_h("simple_plot", height = "350px"),
+ui <- fluidPage(helper(numericInput("n_points", label = "Number of points", value = 1000), 
+                       content = "n_points"), 
+                helper(plotOutput("simple_plot", height = "350px"),
+                       content = "simple_plot"),
                 verbatimTextOutput("output_debug"))
 
 
@@ -25,10 +19,11 @@ server <- function(input, output) {
   observe_helpers(session = shiny::getDefaultReactiveDomain(),
                   help_dir = "helpfiles")
   
-  
+  set.seed(17)
   output[["simple_plot"]] <- renderPlot({
-    
-    plot(1L:input[["n_points"]], type = "b")
+    ggplot(data.frame(x = rnorm(input[["n_points"]]), y = rnorm(input[["n_points"]])), 
+                      aes(x = x, y = y))+
+      geom_point()
   })
   
   output[["output_debug"]] <- renderPrint({

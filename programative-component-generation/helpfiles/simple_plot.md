@@ -1,4 +1,1 @@
-## Plot 1
-
-***
-lalalala
+It is a simple plot

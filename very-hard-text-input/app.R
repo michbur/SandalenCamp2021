@@ -14,7 +14,7 @@ return_right_text = function(col_code) {
 
 ui <- shinyUI(fluidPage(useShinyjs(),
                         textInput(inputId = "text", 
-                                  label = "Wpisz kolor, np. niebieski: 240, 1, 0.5", 
+                                  label = "Wpisz kolor HLS, np. niebieski: 240, 1, 0.5", 
                                   value = NULL),
                         verbatimTextOutput("value")))
 
