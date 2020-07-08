@@ -28,7 +28,7 @@ server <- function(input, output) {
   
   generate_tooltip <- function(df, hv){
     if(!is.null(hv)){
-      hv <- input[["iris_plot_hover"]]
+      
       if(nrow(df) != 0) { 
         tt_pos_adj <- ifelse(hv[["coords_img"]][["x"]]/hv[["range"]][["right"]] < 0.5,
                              "left", "right")
@@ -42,7 +42,7 @@ server <- function(input, output) {
         #                 tt_pos_adj, ":", tt_pos, 
         #                 "px; top:", hv[["coords_css"]][["y"]], "px; padding: 0px;")
         style <- paste0("display:block;
-                        position:absolute;
+                        position:relative;
                         z-index:1000;
                         background-color: rgba(245, 245, 245, 1);
                         pointer-events: none;",
