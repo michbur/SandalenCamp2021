@@ -5,13 +5,13 @@ library(stringr)
 
 createHelpers <- function(){
   possibleOutputs <- ls("package:shiny")[grep("Output", ls("package:shiny"))]
-  path <- "./programative-component-generation/jakubkala/helpers_mds"
-  
+  path <- "helpers_mds"
+
   for(i in 1:length(possibleOutputs)){
-    # if(!file.exists(paste0(path,"/",possibleOutputs[i]))){
-    #   create_help_files(files = possibleOutputs[i],
-    #                     help_dir = path)
-    # }
+    if(!file.exists(paste0(path,"/",possibleOutputs[i]))){
+      create_help_files(files = possibleOutputs[i],
+                        help_dir = path)
+    }
     function_name <- possibleOutputs[i]
     function_name_h <- paste0(possibleOutputs[i], "_h")
     func <- get(function_name)
@@ -34,7 +34,7 @@ ui <- fluidPage(
   plotOutput_h("simple_plot"),
   numericInput_h("n_points", label = "Number of points", value = 158))
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   observe_helpers(help_dir = "helpers_mds")
   
