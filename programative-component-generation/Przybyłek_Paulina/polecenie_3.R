@@ -43,7 +43,7 @@ output_function_with_helper <- function(){
   # przypisanie funkcji do nazw
   for(i in 1:length(fun_h)){
     x <- fun_h[[i]]
-    assign(as.character(name_with_h[i]), x)
+    assign(as.character(name_with_h[i]), x, envir = .GlobalEnv)
   }
   
 }
