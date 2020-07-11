@@ -8,5 +8,7 @@
 
 ## Literatura
 
-R Internals: https://cran.r-project.org/doc/manuals/R-ints.html
-Style guide: http://adv-r.had.co.nz/Style.html
+ - R Internals: https://cran.r-project.org/doc/manuals/R-ints.html
+ - Style guide: http://adv-r.had.co.nz/Style.html
+ - Budowanie pakietów: http://r-pkgs.had.co.nz/; https://cran.r-project.org/doc/manuals/r-release/R-exts.html
+ 
