@@ -1,0 +1,1 @@
+Wykorzystując apkę Shiny generującą kompotentny z helperami napisz przykładową aplikację, która pokazuje zastosowanie przynajmniej pięciu outputów z helperem. Aplikację zgolemizuj :) 
