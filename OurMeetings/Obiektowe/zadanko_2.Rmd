@@ -1,0 +1,68 @@
+---
+title: "Funkcje summary i plot dla stworzonej przez nas klasy"
+author: "Paulina Przybyłek"
+date: "2 lipca 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Na początek stwórzmy sobie wektor do testowania i niech należy on do naszej nowej klasy.
+
+```{r vector}
+
+set.seed(1410)
+y <- factor(sample(letters[1L:4], 2000, replace = TRUE))
+class(y) <- "niemampojecia"
+class(y)
+levels(y)
+
+```
+
+
+## Funkcja summary
+
+
+```{r sum}
+summary.niemampojecia <- function(x){
+  
+  # wyświetla podsumowanie obiektu x (ile elementów a, b, c, d jest w obiekcie). Metoda:
+  # i) generuje wyswietlony w ładnej tabelce wynik podsumowania
+  # ii) zwraca macierz z nazwanymi kolumnami i licznosciami obiektow
+  
+  sum <- table(x)
+  max_len <- max(nchar(paste(sum)))
+  
+  cat(sapply(levels(x), function(e){paste(e, paste(replicate(max_len - nchar(e), " "), collapse = ""))}), sep = "| ")
+  cat("\n")
+  cat(paste(sum), sep = " | ")
+  
+  out <- matrix(sum, nrow = 1, ncol = length(unique(x)), dimnames = list(c(1), levels(x)))
+}
+
+# wynik naszej funkcji
+result <- summary(y)
+result
+class(result)
+
+```
+
+## Funkcja plot
+
+
+```{r plot}
+plot.niemampojecia <- function(x){
+
+  # wyswietla obrazek prezentujacy barplot pokazujacy licznosc elementow z obiektu x
+  
+  invisible(capture.output(result <- summary.niemampojecia(x))) # jak damy invisible(out) w summary.niemampojecia to capture.output nie jest potrzebny
+  barplot(result, col = "pink", main = "Liczność elementów obiektu")
+  
+}
+
+# wynik naszej funkcji
+plot(y)
+```
+
